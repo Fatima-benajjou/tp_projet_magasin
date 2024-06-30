@@ -17,8 +17,11 @@ import javax.persistence.Id;
 public class Client {
      @Id
      @GeneratedValue (strategy = GenerationType.IDENTITY)
+     @Column (name = "id_habitant")
     private int id;
     private String nom;
     private String prenom;
+
+
 
 }

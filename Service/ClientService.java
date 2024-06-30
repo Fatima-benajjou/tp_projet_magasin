@@ -23,6 +23,18 @@ public class ClientService {
 
     }
 
+    public Client update (int id,String nom, String prenom){
+        Client client = clientRepo.getById(Client.class,id);
+        if(client != null){
+            client.setNom(nom);
+            client.setPrenom(prenom);
+
+
+            clientRepo.save(client);
+            return client;
+        }
+
+
     public boolean delete(int id) {
         Client client = clientRepo.getById(Client.class, id);
         if (client != null) {

@@ -11,5 +11,5 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Data
 public class Electronique  extends Article{
-    private int batterieDuration;
+    private String batterieDuration;
 }

@@ -32,10 +32,10 @@ public class IHMClient {
             entry = sc.nextLine();
             switch(entry){
                 case "1"-> clientService.createClient();
-//                case "2"-> updateClient();
-//                case "3"-> deleteClient();
-//                case "4"-> getById();
-//                case "5"-> getAll();
+                case "2"-> clientService.updateClient();
+                case "3"-> clientService.delete();
+                case "4"-> clientRepo.getById();
+                case "5"-> clientService.getAll();
 //                default -> {
 
                 }

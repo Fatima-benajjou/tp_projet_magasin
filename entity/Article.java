@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.awt.*;
 
 @Entity
 @Data
@@ -21,6 +22,8 @@ public abstract class Article {
     private String description;
     private float prix;
     private int quantite;
-    private String dateRestock;
+    private String dateRestosk;
 
+    @ManyToMany (mappedBy = "articles")
+    private List<Vente> ventes;
 }
