@@ -6,8 +6,9 @@ import org.example.tp_projet.entity.Nourriture;
 import org.example.tp_projet.util.SessionfactorySingleton;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
-import javax.management.Query;
+
 import java.util.List;
 
 public class ElectroniqueRepo {
@@ -23,11 +24,11 @@ public class ElectroniqueRepo {
         sessionFactory = SessionfactorySingleton.getSessionFactory();
     }
 
-    public Electronique create(Electronique electronique) {
+    public Electronique save (Electronique electronique) {
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(electronique);
+            session.saveOrUpdate(electronique);
             session.getTransaction().commit();
             return electronique;
         } catch (Exception ex) {
@@ -67,10 +68,11 @@ public class ElectroniqueRepo {
 
     public List<Electronique> getAll() {
         session = sessionFactory.openSession();
-        Query <Electronique> query = session.createQuery("select * from Electrique", Electronique.class);
+        Query<Electronique> query = session.createQuery("select e from Electronique e", Electronique.class);
         List<Electronique> listeElectronique = query.list();
         session.close();
-        return query.list();
+        return listeElectronique;
+
     }
 }
 

@@ -1,15 +1,19 @@
 package org.example.tp_projet.Service;
 
+import org.example.tp_projet.entity.Client;
 import org.example.tp_projet.entity.Electronique;
 import org.example.tp_projet.repository.ElectroniqueRepo;
+import org.w3c.dom.ls.LSOutput;
 
+import javax.persistence.EntityNotFoundException;
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Scanner;
 
 public class ElectroniqueService {
 
-    private ElectroniqueRepo electroniqueRepo;
+
+     ElectroniqueRepo electroniqueRepo = new ElectroniqueRepo ();
 
     public Electronique create(String description, float prix, int quantite, String dateRestock, String batterieDuration) {
         Electronique electronique = Electronique.builder()
@@ -22,25 +26,32 @@ public class ElectroniqueService {
         return electroniqueRepo.save(electronique);
     }
 
-    public Electronique update(String description, float prix,
-                               int quantite, String dateRestock, String batterieDuration) {
-        Electronique electronique = electroniqueRepo.getById(Electronique.class, id);
+    public Electronique update() {
+        System.out.println("Veuillez saisir l'Id que vous souhaiter modifier");
+        Electronique electronique = electroniqueRepo.getById(Electronique.class, sc.nextInt());
 
         if (electronique != null) {
-            electronique.setDescription(description);
-            electronique.setPrix(prix);
-            electronique.setQuantie(quantite);
-            electronique.setDateRestock(dateRestock);
-            electronique.setDate(batterieDuration);
+            System.out.println("Entrez une nouvelle description");
+            electronique.setDescription(sc.nextLine());
+            System.out.println("Entrez nouveau prix");
+            electronique.setPrix(sc.nextInt());
+            System.out.println("Entrez une nouvelle quantité");
+            electronique.setQuantite(sc.nextInt());
+            System.out.println("Entrez nouvelle date de reassort");
+            electronique.setDateRestock(sc.nextLine());
+            System.out.println("Entrez la durée de baterie");
+            electronique.setBatterieDuration(sc.nextLine());
 
             electroniqueRepo.save(electronique);
             return electronique;
         }
-        throw new NotFoundException("Aucun article a l'id :" + id);
+        throw new EntityNotFoundException("Article non trouvé");
     }
 
-    public boolean delete(int id) {
-        Electronique electronique = electroniqueRepo.getById(Electronique.class, id);
+
+    public boolean delete() {
+        System.out.println("Saisir l'Id que vous souhiatez supprimer");
+        Electronique electronique = electroniqueRepo.getById(Electronique.class, sc.nextInt());
         if (electronique != null) {
             electroniqueRepo.delete(electronique);
             return true;
@@ -48,13 +59,23 @@ public class ElectroniqueService {
         throw new EntityNotFoundException("Article non trouvé");
     }
 
-    public Electronique findById(int id) {
-        Electronique electronique = electroniqueRepo.getById(Electronique.class, id);
+    public Electronique findById() {
+        System.out.println("Saisir l'ID que vous rechercher");
+        Electronique electronique = electroniqueRepo.getById(Electronique.class, sc.nextInt());
+        if(electronique != null) {
         return electronique;
     }
     throw new
 
-    EntityNotFoundException("Aucun article trouvé pour cet ID")
+    EntityNotFoundException("Aucun article trouvé pour cet ID");
+}
+
+    public void findAll(){
+        List<Electronique> electroniques = getAll();
+        if(electroniques == null)
+            return;
+        System.out.println(electroniques);
+    }
 
 
     public List<Electronique> getAll() {
@@ -82,7 +103,7 @@ public class ElectroniqueService {
                 .prix(prix)
                 .quantite(quantite)
                 .dateRestock(dateRestock)
-                .durationBatterie(dureeBatterie)
+                .batterieDuration(dureeBatterie)
                 .build();
 
         electroniqueRepo.save(electronique);

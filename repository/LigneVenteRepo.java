@@ -1,8 +1,7 @@
 package org.example.tp_projet.repository;
 
-import org.example.tp_projet.entity.Client;
-import org.example.tp_projet.entity.Nourriture;
-import org.example.tp_projet.entity.Vetement;
+import org.example.tp_projet.entity.LigneVente;
+import org.example.tp_projet.entity.Vente;
 import org.example.tp_projet.util.SessionfactorySingleton;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,25 +9,24 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class NourritureRepo {
+public class LigneVenteRepo {
 
-    //variable global dans notre repository accesible par toute les methode du repository
     private SessionFactory sessionFactory;
     private Session session;
 
-    public NourritureRepo() {
+    public LigneVenteRepo() {
         //a la creation de notre repository on vien recuperer l'instance
         // de SessionFactory pour pouvoir crée des session dans notre repository
         sessionFactory = SessionfactorySingleton.getSessionFactory();
     }
 
-    public Nourriture save (Nourriture nourriture) {
+    public LigneVente save(LigneVente ligneVente) {
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.saveOrUpdate(nourriture);
+            session.saveOrUpdate(ligneVente);
             session.getTransaction().commit();
-            return nourriture;
+            return ligneVente;
         } catch (Exception ex) {
             session.getTransaction().rollback();
             return null;
@@ -37,11 +35,11 @@ public class NourritureRepo {
         }
     }
 
-    public boolean delete(Nourriture nourriture) {
+    public boolean delete(LigneVente ligneVente) {
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            session.delete(nourriture);
+            session.delete(ligneVente);
             session.getTransaction().commit();
             return true;
         } catch (Exception ex) {
@@ -52,33 +50,24 @@ public class NourritureRepo {
         }
     }
 
-    public Nourriture findById(int id) {
+    public LigneVente findById(int id) {
         session = sessionFactory.openSession();
-        Nourriture nourriture = session.get(Nourriture.class, id);
+        LigneVente ligneVente = session.get(LigneVente.class, id);
         session.close();
-        return nourriture;
+        return ligneVente;
     }
 
-
-    public Nourriture getById(Class<Nourriture> classe, int id)
-    {
+    public LigneVente getById(Class<LigneVente> classe, int id) {
         return session.find(classe, id);
     }
 
-
-    public List<Nourriture> getAll() {
+    public List<LigneVente> getAll(){
         session = sessionFactory.openSession();
-        Query<Nourriture> query = session.createQuery("select n From Nourriture n", Nourriture.class);
-        List<Nourriture> listeNourriture = query.getResultList();
+        Query<LigneVente> query =session.createQuery("select l From LigneVente l", LigneVente.class);
+        List<LigneVente> listeLigneVentes = query.list();
         session.close();
-        return listeNourriture;
-
+        return listeLigneVentes;
 
     }
 
 }
-
-
-
-
-

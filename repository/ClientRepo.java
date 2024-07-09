@@ -66,10 +66,10 @@ public class ClientRepo {
 
         public List<Client> getAll(){
             session = sessionFactory.openSession();
-            Query<Client> query =session.createQuery("select * From Client", Client.class);
+            Query<Client> query =session.createQuery("select c From Client c", Client.class);
             List<Client> listeClients = query.list();
             session.close();
-            return query.list();
+            return listeClients;
 
         }
 

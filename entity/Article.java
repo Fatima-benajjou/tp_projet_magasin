@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.awt.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,16 +14,33 @@ import java.awt.*;
 @AllArgsConstructor
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-
 public abstract class Article {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
     private float prix;
     private int quantite;
-    private String dateRestosk;
+    private String dateRestock;
 
-    @ManyToMany (mappedBy = "articles")
-    private List<Vente> ventes;
+    @OneToMany (mappedBy = "article")
+    private List<LigneVente> ligneVentes;
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+        this.dateRestock=dateRestock;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", prix=" + prix +
+                ", quantite=" + quantite +
+                ", dateRestock='" + dateRestock + '\'' +
+                '}';
+    }
 }
+
+

@@ -11,9 +11,6 @@ import java.util.Scanner;
 public class IHMClient {
     private Scanner sc;
     private ClientService clientService;
-    private ClientRepo clientRepo;
-
-
 
     public IHMClient(Scanner sc) {
         this.sc = sc;
@@ -32,11 +29,13 @@ public class IHMClient {
             entry = sc.nextLine();
             switch(entry){
                 case "1"-> clientService.createClient();
-                case "2"-> clientService.updateClient();
+                case "2"-> clientService.update();
                 case "3"-> clientService.delete();
-                case "4"-> clientRepo.getById();
-                case "5"-> clientService.getAll();
-//                default -> {
+                case "4"-> clientService.findById();
+                case "5"-> clientService.findAll();
+               default -> {
+                   return;
+               }
 
                 }
             }
